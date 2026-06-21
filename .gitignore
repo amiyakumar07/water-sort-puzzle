@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+www/
+dist/
+
+# Android build/local files
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/app/release/
+*.keystore
+*.jks
+
+# OS files
+.DS_Store
+Thumbs.db

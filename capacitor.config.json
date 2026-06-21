@@ -1,0 +1,8 @@
+{
+  "appId": "com.swagchup.watersort",
+  "appName": "Water Sort",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

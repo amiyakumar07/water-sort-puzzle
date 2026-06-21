@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Water Sort</string>
+    <string name="title_activity_main">Water Sort</string>
+    <string name="package_name">com.swagchup.watersort</string>
+    <string name="custom_url_scheme">com.swagchup.watersort</string>
+</resources>

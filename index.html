@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Sort - Color Puzzle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+    <!-- LOADING SCREEN -->
+    <div id="screen-loading" class="screen-overlay">
+        <div class="loading-content">
+            <div class="logo-large">
+                <h1>Water Sort</h1>
+                <span class="tagline">Loading Offline Game...</span>
+            </div>
+            <!-- Test Tube Loading Bar -->
+            <div class="loading-tube">
+                <div id="loading-bar" class="loading-liquid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Privacy Consent Modal -->
+    <div id="modal-consent" class="modal-overlay hidden">
+        <div class="modal-card consent-card">
+            <div class="modal-header">
+                <h2>Terms & Privacy</h2>
+            </div>
+            <div class="modal-body">
+                <p class="consent-intro">Please review and accept our policies to play offline.</p>
+                <div class="policy-box">
+                    <h4>Privacy Policy</h4>
+                    <p>This is a local-only offline game. We do not connect to the internet, transmit device IDs, or collect/share any personal information. All level progress, sound preferences, and settings are stored locally on your device's browser memory (localStorage).</p>
+                    
+                    <h4>Terms of Service</h4>
+                    <p>1. The game is provided free of charge "as is" for entertainment purposes.<br>
+                    2. Clearing your browser cookies or cache will erase your local game progress.<br>
+                    3. You agree not to distribute modified copies of this game without proper reference.</p>
+                </div>
+                <div class="consent-checkbox-area">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="checkbox-consent">
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">I accept the Terms and Privacy Policy</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-consent-accept" class="primary-btn" disabled>Accept & Play</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- HOME / OPENING SCREEN -->
+        <div id="screen-home" class="screen hidden">
+            <div id="home-bg-bubbles" class="home-bg-bubbles"></div>
+            <header class="home-header">
+                <div class="logo-badge">OFFLINE GAME</div>
+                <div class="logo-large">
+                    <h1>Water Sort</h1>
+                    <span class="tagline">Premium Edition</span>
+                </div>
+            </header>
+
+            <!-- Floating Tube Decorative Illustration -->
+            <div class="tubes-illustration">
+                <div class="ill-tube float-tube-1">
+                    <div class="ill-liquid color-1" style="height: 40%"></div>
+                    <div class="ill-liquid color-2" style="height: 30%"></div>
+                </div>
+                <div class="ill-tube float-tube-2">
+                    <div class="ill-liquid color-5" style="height: 60%"></div>
+                    <div class="ill-liquid color-4" style="height: 20%"></div>
+                </div>
+                <div class="ill-tube float-tube-3">
+                    <div class="ill-liquid color-3" style="height: 30%"></div>
+                    <div class="ill-liquid color-6" style="height: 40%"></div>
+                </div>
+            </div>
+
+            <!-- Big Glowing Play Button -->
+            <div class="play-section">
+                <button id="btn-play-game" class="play-btn pulse-glow">
+                    <span class="play-icon">▶</span> PLAY
+                </button>
+            </div>
+
+            <!-- Level Selection Board -->
+            <div class="level-select-container">
+                <h3 class="section-title">Select Level</h3>
+                <div id="level-grid" class="level-grid"></div>
+            </div>
+
+            <!-- Home screen settings footer -->
+            <footer class="home-footer">
+                <button id="btn-home-info" class="circle-btn" title="How to Play">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </button>
+                <button id="btn-home-sound" class="circle-btn" title="Toggle Sound">
+                    <svg id="svg-home-sound-on" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    <svg id="svg-home-sound-off" class="hidden" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                </button>
+            </footer>
+        </div>
+
+        <!-- GAMEPLAY SCREEN -->
+        <div id="screen-game" class="screen hidden">
+            <!-- Header HUD -->
+            <header class="game-header">
+                <button id="btn-back-home" class="icon-btn" title="Back to Home Menu" aria-label="Back to Home Menu">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Menu</span>
+                </button>
+                <div class="level-badge-container">
+                    <span class="level-label">LEVEL</span>
+                    <span id="level-number" class="level-val">1</span>
+                </div>
+                <button id="btn-game-sound" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                    <svg id="svg-game-sound-on" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    <svg id="svg-game-sound-off" class="hidden" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                </button>
+            </header>
+
+            <!-- Controls HUD -->
+            <section class="controls-hud">
+                <button id="btn-undo" class="action-btn" title="Undo Move" disabled>
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+                    <span>Undo</span>
+                </button>
+                <button id="btn-restart" class="action-btn" title="Restart Level">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                    <span>Restart</span>
+                </button>
+            </section>
+
+            <!-- Main Game Area -->
+            <main class="game-area">
+                <!-- Dynamic tubes container -->
+                <div id="tubes-grid" class="tubes-grid"></div>
+
+                <!-- Stuck Warning Indicator -->
+                <div id="stuck-warning" class="stuck-warning hidden">
+                    <div class="stuck-content">
+                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>No moves left! Need to restart or undo?</span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p>Sort the colors so each tube contains a single color.</p>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- Modals -->
+    
+    <!-- How To Play Modal -->
+    <div id="modal-howto" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>How to Play</h2>
+            </div>
+            <div class="modal-body">
+                <div class="tutorial-steps">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <p>Tap a <strong>source tube</strong> to select it, then tap a <strong>destination tube</strong> to pour.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <p>You can only pour if the receiving tube is <strong>empty</strong> OR its top color matches the pouring liquid's color.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <p>The destination tube must also have <strong>enough room</strong> to receive the liquid.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <p>Sort all colors completely to win! Each tube must be empty or full of a single solid color.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-howto" class="primary-btn">Start Sorting</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div id="modal-win" class="modal-overlay hidden">
+        <div class="modal-card win-card animate-pop">
+            <div class="confetti-container" id="confetti-container"></div>
+            <div class="modal-header win-header">
+                <div class="crown-icon">👑</div>
+                <h2>Level Complete!</h2>
+                <p>Fantastic job. You sorted them perfectly!</p>
+            </div>
+            <div class="modal-body win-body">
+                <div class="win-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Moves</span>
+                        <span id="win-moves-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Level</span>
+                        <span id="win-level-val" class="stat-value">1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-next-level" class="primary-btn pulse-glow">Next Level</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js?v=2"></script>
+</body>
+</html>
